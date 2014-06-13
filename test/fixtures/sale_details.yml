@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sale_id: 1
+  product_id: 1
+  preciounitario: 1.5
+  cantidad: 1.5
+  importe: 1.5
+
+two:
+  sale_id: 1
+  product_id: 1
+  preciounitario: 1.5
+  cantidad: 1.5
+  importe: 1.5

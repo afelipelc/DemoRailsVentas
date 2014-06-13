@@ -1,0 +1,78 @@
+<%= form_for(@sale) do |f| %>
+  <% if @sale.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
+
+      <ul>
+      <% @sale.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div id="datosClient">
+  <fieldset>
+  <legend>Datos del cliente</legend>
+    <%= f.hidden_field :client_id %>
+
+    <%= fields_for @sale.client do |c| %>
+      <%= c.hidden_field :id %>
+      <%= c.text_field :nombre, :placeholder => "Nombre del cliente" %>
+      <%= c.text_field :direccion, :placeholder => "Domicilio" %>
+      <%= c.text_field :email, :placeholder => "Email del cliente" %>
+      <%= c.text_field :telefono, :placeholder => "Teléfono del cliente" %>
+    <% end %>
+  </fieldset>
+</div>
+
+<div id="detallesVentaContainer">
+    <form id="agregarProductoForm">
+      <input type="text" name="clavelibro" id="clavelibro" placeholder="Clave del libro a agregar"/>
+      <input type="number" name="cantidadlibro" id="cantidadlibro" placeholder="Cantidad" value="1">
+
+    </form>
+
+    <%# Crear la tabla donde agregaremos los productos %>
+
+  <table id="detallesVentaTable" cellspacing="0">
+    <thead>
+      <th>Clave</th>
+      <th>Descripción</th>
+      <th>P. Unidad</th>
+      <th>Cantidad</th>
+      <th>Importe</th>
+    </thead>
+    <tbody>
+<% @sale.saleDetails.each do |item| %>
+    <%= f.fields_for :saledetails, item do |d| %>
+      <tr>
+        <td><%= d.text_field :product_id %></td>
+        <td><%#= d.text_field :product.nombre %></td>
+        <td><%= d.text_field :preciounitario %></td>
+        <td><%= d.text_field :cantidad %></td>
+        <td><%= d.text_field :importe %></td>
+    <% end %>
+<% end %>
+    </tbody>
+    <tfoot>
+      <th colspan="2">Total de artículos:</th>
+      <th id="totalArts"></th>
+      <th>Importe total:</th>
+      <th id="importeTotalVenta"></th>
+    </tfoot>
+  </table>
+</div>
+  <div class="field">
+    <%= f.label :fecha %><br>
+    <%= f.datetime_select :fecha %>
+  </div>
+
+  <div class="field">
+    <%= f.label :importe %><br>
+    <%= f.datetime_select :importe %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

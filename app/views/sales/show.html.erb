@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_for(@sale) do |f| %>
+
+<div id="datosClient">
+  <fieldset>
+  <legend>Datos del cliente</legend>
+    <%= f.text_field :client_id %>
+
+    <%= fields_for @sale.client do |c| %>
+      <%= c.hidden_field :id %>
+      <%= c.text_field :nombre, :placeholder => "Nombre del cliente", :readonly=>"true" %>
+      <%= c.text_field :direccion, :placeholder => "Domicilio",  :readonly=>"true" %>
+      <%= c.text_field :email, :placeholder => "Email del cliente",  :readonly=>"true" %>
+      <%= c.text_field :telefono, :placeholder => "Teléfono del cliente",  :readonly=>"true" %>
+    <% end %>
+  </fieldset>
+</div>
+
+<div id="detallesVentaContainer">
+    <di id="agregarProductoContainer">
+      <input type="text" name="clavelibro" id="clavelibro" placeholder="Clave del libro a agregar"/>
+      <input type="number" name="cantidadlibro" id="cantidadlibro" placeholder="Cantidad" value="1">
+
+    </div>
+
+    <%# Crear la tabla donde agregaremos los productos %>
+
+  <table id="detallesVentaTable" cellspacing="0">
+    <thead>
+      <th>Clave</th>
+      <th>Descripción</th>
+      <th>P. Unidad</th>
+      <th>Cantidad</th>
+      <th>Importe</th>
+    </thead>
+    <tbody>
+      <% @sale.saleDetails.each do |item| %>
+        <%= f.fields_for :saleDetails, item do |d| %>
+          <tr>
+            <td><%= d.text_field :product_id,  :readonly=>"true" %></td>
+
+				<%= fields_for item.product do |p| %>
+            		<td><%= p.text_field :nombre,  :readonly=>"true" %></td>
+            	<% end %>
+
+            <td><%= d.text_field :preciounitario,  :readonly=>"true" %></td>
+            <td><%= d.text_field :cantidad,  :readonly=>"true" %></td>
+            <td><%= d.text_field :importe,  :readonly=>"true" %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <th colspan="2">Total de artículos:</th>
+      <th id="totalArts"></th>
+      <th>Importe total:</th>
+      <th id="importeTotalVenta"></th>
+    </tfoot>
+  </table>
+</div>
+  <div class="field">
+    <%= f.label :fecha %><br>
+    <%= f.datetime_select :fecha %>
+  </div>
+
+  <div class="field">
+    <%= f.label :importe %><br>
+    <%= f.datetime_select :importe %>
+  </div>
+  <div class="actions">
+    
+  </div>
+<% end %>
+
