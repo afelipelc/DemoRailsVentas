@@ -1,5 +1,9 @@
 <h1>Listing products</h1>
-
+<div id="buscar producto">
+<%= form_tag(products_path, method: "get") do%>
+  <%= text_field_tag(:q, nil, :placeholder => "Buscar producto") %>
+<% end %>
+</div>
 <table>
   <thead>
     <tr>
