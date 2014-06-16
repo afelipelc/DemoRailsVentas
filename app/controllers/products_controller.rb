@@ -4,6 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
+    # si se especifica el criterio, realizar la busqueda
     if params[:q]
       @products = Product.where("nombre  LIKE '%"+params[:q]+"%'")
     else
