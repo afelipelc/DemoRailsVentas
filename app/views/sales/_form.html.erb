@@ -1,4 +1,4 @@
-<%= form_for(@sale) do |f| %>
+<%= form_for@sale, :html => {:class => 'form-horizontal'} do |f| %>
   <% if @sale.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
@@ -18,7 +18,8 @@
 
     <%= fields_for @sale.client do |c| %>
       <%= c.hidden_field :id %>
-      <%= c.text_field :nombre, :placeholder => "Nombre del cliente" %>
+      <%#= c.text_field :nombre, :placeholder => "Nombre del cliente" %>
+      <%= c.autocomplete_field :nombre, autocomplete_client_nombre_clients_path, :placeholder => "Nombre del cliente", :multiple => false, :update_elements => {:direccion => '#client_direccion', :telefono => '#client_telefono', :email => "#client_email"} %>
       <%= c.text_field :direccion, :placeholder => "Domicilio" %>
       <%= c.text_field :email, :placeholder => "Email del cliente" %>
       <%= c.text_field :telefono, :placeholder => "Teléfono del cliente" %>

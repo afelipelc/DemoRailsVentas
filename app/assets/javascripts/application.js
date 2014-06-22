@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.all
+//= require autocomplete-rails
+//= require twitter/bootstrap
 //= require turbolinks
 //= require_tree .
 
@@ -32,15 +35,36 @@ $(document).ready(function(){
   });
 
   $("#guardarVenta").on("click", function(){
+    //alert($("#client_nombre").val());
     //enviar formulario
     $("#new_sale").submit();
   });
+
+  // $('#client_nombre').bind('railsAutocomplete.select', function(event, data){
+  //   /* Do something here */
+  //   alert(data);
+  // });
+
+$('#client_nombre').on('railsAutocomplete.select', function(event, data){
+  //poner valores en input requeridos con datos del cliente
+    $("#client_id").val(data.item.id);
+    $("#sale_client_id").val(data.item.id);
+  });
+
+  //prevenir que puedan quedarse datos del cliente
+  $('#client_nombre').on("keypress",function(event) {
+    if($(this).val() == "")
+     {
+      $("#client_id").val("");
+      $("#sale_client_id").val("");
+     }
+  });
+
 });
 
 function agregaLibro(codigo){
   var index = $(".idLibroVender").length;
 
-  alert(index);
 
   if(codigo == "" || codigo == NaN)
   {
@@ -50,6 +74,8 @@ function agregaLibro(codigo){
     return;
   }
 
+//cuidado con>>> No 'Access-Control-Allow-Origin' header is present on the requested resource.
+//la url de origen debe coincidir con el servidor
   $.ajax({
     dataType: "json",
     url: "http://0.0.0.0:3000/products/find.json?codigo=" + codigo})

@@ -3,7 +3,11 @@ Rails.application.routes.draw do
 
   resources :sales
 
-  resources :clients
+  resources :clients do
+    collection do
+      get :autocomplete_client_nombre
+    end
+  end
 
   resources :products do
     collection do

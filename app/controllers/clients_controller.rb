@@ -1,10 +1,32 @@
 class ClientsController < ApplicationController
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+  
+  autocomplete :client, :nombre, :display_value => :nombre, :extra_data => [:direccion, :telefono, :email] do |items|
+    respond_to do |format|
+     format.json { render :json => @items }
+    end
+  end
 
+# el autocomplete se tomo de http://rubydoc.info/gems/rails4-autocomplete/1.1.0/frames
+# se instalo el rails jquery ui gem
+# no se agrego el javascript tag en el layout
+
+
+   #, :full => true  << para cadenas que solo empiecen por
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.all
+    if params[:q]
+      @clients = Client.where("nombre  LIKE '%"+params[:q]+"%'")
+    else
+      @clients = Client.all
+    end
+    #@clients = Client.all
+    #@clients = Client.find(:all,:conditions => ['nombre LIKE ?', "#{params[:q]}%"],  :limit => 8, :order => 'nombre')
+    respond_to do |format|
+      format.html
+      format.json { render :json => @clients }
+    end
   end
 
   # GET /clients/1
