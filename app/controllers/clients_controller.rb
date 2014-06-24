@@ -48,11 +48,20 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
 
+
     respond_to do |format|
-      if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
-        format.json { render :show, status: :created, location: @client }
+      if @client.valid? 
+        puts "cliente valido"
+        if @client.save
+          format.html { redirect_to @client, notice: 'Client was successfully created.' }
+          format.json { render :show, status: :created, location: @client }
+        else
+          format.html { render :new }
+          format.json { render json: @client.errors, status: :unprocessable_entity }
+        end
       else
+        puts "cliente NO valido"
+        @client.errors[:nombre]
         format.html { render :new }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end

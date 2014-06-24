@@ -30,6 +30,7 @@ gem 'spring',        group: :development
 # Assets Bootstrap Gem
 gem 'twitter-bootstrap-rails'
 gem 'rails4-autocomplete'
+gem 'devise'
 
 #my gems
 # gem 'strong_parameters' # not supported by rails 4

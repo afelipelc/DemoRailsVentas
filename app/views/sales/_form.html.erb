@@ -1,5 +1,5 @@
-<%= form_for@sale, :html => {:class => 'form-horizontal'} do |f| %>
-  <% if @sale.errors.any? %>
+<%= form_for @sale, :html => { :class => 'form-horizontal' } do |f| %>
+<% if @sale.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@sale.errors.count, "error") %> prohibited this sale from being saved:</h2>
 
@@ -9,8 +9,7 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
-
+<% end %>
 <div id="datosClient">
   <fieldset>
   <legend>Datos del cliente</legend>
@@ -28,14 +27,12 @@
 </div>
 
 <div id="detallesVentaContainer">
-    <di id="agregarProductoContainer">
-      <input type="text" name="clavelibro" id="clavelibro" placeholder="Clave del libro a agregar"/>
-      <input type="number" name="cantidadlibro" id="cantidadlibro" placeholder="Cantidad" value="1">
-
-    </div>
+    <div id="agregarProductoContainer">
+    <input type="text" name="clavelibro" id="clavelibro" placeholder="Clave del libro a agregar"/>
+    <input type="number" name="cantidadlibro" id="cantidadlibro" placeholder="Cantidad" value="1">
+</div>
 
     <%# Crear la tabla donde agregaremos los productos %>
-
   <table id="detallesVentaTable" cellspacing="0">
     <thead>
       <th>Clave</th>
@@ -43,13 +40,13 @@
       <th>P. Unidad</th>
       <th>Cantidad</th>
       <th>Importe</th>
-    </thead>
+  </thead>
     <tbody>
       <% @sale.saleDetails.each do |item| %>
         <%= f.fields_for :saleDetails, item do |d| %>
           <tr>
             <td><%= d.text_field :product_id, :class =>"idLibroVender" %></td>
-            <td><input type="text" id="nombreProducto" value=""></td>
+            <td><input type="text" value="<%= item.product.nombre %>"></td>
             <td><%= d.text_field :preciounitario %></td>
             <td><%= d.text_field :cantidad, :class =>"cantidadVender" %></td>
             <td><%= d.text_field :importe, :class =>"importeProducto" %></td>
@@ -65,17 +62,11 @@
     </tfoot>
   </table>
 </div>
-  <div class="field">
-    <%= f.label :fecha %><br>
-    <%= f.datetime_select :fecha %>
+
+<div class="form-actions">
+    <%#= f.submit nil, :class => 'btn btn-primary' %>
+    <button name="guardarVenta" id="guardarVenta" type="button" class="btn btn-primary">Registrar venta</button>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), sales_path, :class => 'btn' %>
   </div>
 
-  <div class="field">
-    <%= f.label :importe %><br>
-    <%= f.datetime_select :importe %>
-  </div>
-  <div class="actions">
-    <%#= f.submit %>
-    <button name="guardarVenta" id="guardarVenta" type="button">Registrar venta</button>
-  </div>
 <% end %>

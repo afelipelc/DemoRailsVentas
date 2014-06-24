@@ -1,8 +1,12 @@
 <%= form_for @client, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="control-group">
+
+  <div class="control-group<%= @client.errors[:nombre].any? ? " error" : "" %>">
     <%= f.label :nombre, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :nombre, :class => 'text_field' %>
+      <%#Obtener solo el mensaje con la expresion regular /\w([^]*)/%>
+      <span class="help-inline">
+      <%= @client.errors[:nombre].any? ? @client.errors[:nombre].to_s[/\w([^"]*)/] : "" %></span>
     </div>
   </div>
   <div class="control-group">
@@ -17,10 +21,12 @@
       <%= f.text_field :telefono, :class => 'text_field' %>
     </div>
   </div>
-  <div class="control-group">
+  <div class="control-group <%= @client.errors[:email].any? ? " error" : "" %>">
     <%= f.label :email, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :email, :class => 'text_field' %>
+      <span class="help-inline">
+      <%= @client.errors[:email].any? ? @client.errors[:email].to_s[/\w([^"]*)/] : "" %></span>
     </div>
   </div>
 

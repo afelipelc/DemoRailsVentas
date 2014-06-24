@@ -16,21 +16,38 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">Demo app</a>
+      <%= link_to "Demo App", root_path, :class => "brand" %>
       <div class="nav-collapse">
         <ul class="nav">
           <li><%= link_to "Browse Products", products_path %></li>
-          <li><%= link_to "Price List" %></li>
-          <li><%= link_to "Contact Us" %></li>
-          <li><%= link_to "Cart" %></li>
+          <li><%= link_to "New Sale", new_sale_path %></li>
+          <li><%= link_to "Browse clients", clients_path %></li>
         </ul>
       </div>
+      <span class="navbar-text pull-right">
+        <% if user_signed_in? %>
+          Logged in as <strong><%= current_user.email %></strong>.
+          <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
+          <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+        <% else %>
+          <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+          <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+          <% end %>
+      </span>
     </div>
   </div>
 </div>
 <div class="container">
 	<div class="row">
-    	<div class="span9"><%= yield %></div>
+    	<div class="span9">
+        <% if notice %>
+          <p class="alert alert-success"><%= notice %></p>
+        <% end %>
+        <% if alert %>
+          <p class="alert alert-danger"><%= alert %></p>
+        <% end %>
+        <%= yield %>
+      </div>
 	</div>
 </div>
 </body>

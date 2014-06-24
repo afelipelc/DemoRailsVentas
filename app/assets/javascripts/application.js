@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.all
+//= require jquery.ui.autocomplete
 //= require autocomplete-rails
 //= require twitter/bootstrap
 //= require turbolinks
@@ -20,11 +20,14 @@
 
 $(document).ready(function(){
 
+});
 
-	$('#clavelibro').on("change",function() {
-		//pasar a cantidad
-		$("#cantidadlibro").focus();
-	});
+//on load content (reload with turbolinks without resources)
+$(document).on('page:load', function() {
+  $('#clavelibro').on("change",function() {
+    //pasar a cantidad
+    $("#cantidadlibro").focus();
+  });
 
   $('#cantidadlibro').on("keypress",function(event) {
     //buscar el libro por codigo y agregarlo
@@ -34,18 +37,14 @@ $(document).ready(function(){
     }
   });
 
-  $("#guardarVenta").on("click", function(){
+  $("#guardarVenta").on("click", function(event){
     //alert($("#client_nombre").val());
     //enviar formulario
+    event.preventDefault();
     $("#new_sale").submit();
   });
 
-  // $('#client_nombre').bind('railsAutocomplete.select', function(event, data){
-  //   /* Do something here */
-  //   alert(data);
-  // });
-
-$('#client_nombre').on('railsAutocomplete.select', function(event, data){
+  $('#client_nombre').on('railsAutocomplete.select', function(event, data){
   //poner valores en input requeridos con datos del cliente
     $("#client_id").val(data.item.id);
     $("#sale_client_id").val(data.item.id);
@@ -59,7 +58,6 @@ $('#client_nombre').on('railsAutocomplete.select', function(event, data){
       $("#sale_client_id").val("");
      }
   });
-
 });
 
 function agregaLibro(codigo){

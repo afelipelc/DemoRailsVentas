@@ -36,27 +36,28 @@ class SalesController < ApplicationController
     @sale = Sale.new(sale_params)
 
     client = Client.new(client_params)
-    
+    @sale.fecha = Time.new #ponemos la fecha del sistema
     #al recibir los datos, comprobar si existe el cliente, entonces se pueden actualizar sus datos
 
-    # si no existe el cliente, registrar un nuevo
+    # si no existe el cliente, registrar uno nuevo
     if @sale.client_id.nil?
       @sale.client = client
     else
       @sale.client.nombre = client.nombre ##si el cliente ya existe, se actualiza al nuevo valor recibido
       @sale.client.direccion = client.direccion
+      @sale.client.telefono = client.telefono
+      @sale.client.email = client.email
     end
 
-    puts "Datos recibidos de la nueva venta"
- #   @sale.client.nombre = client.nombre ##si el cliente ya existe, se actualiza al nuevo valor recibido
-    puts "Cliente>> " + @sale.client_id.to_s + @sale.client.nombre
-    puts "Productos recibidos: " 
+    #puts "Datos recibidos de la nueva venta"
+    #puts "Cliente>> " + @sale.client_id.to_s + @sale.client.nombre
+    #puts "Productos recibidos: " 
     
-    
-    @sale.saleDetails.each do |item|
-    # #params[:saledetails].each do |item|
-       puts "id: " + item.product_id.to_s + ", p. u: " + item.preciounitario.to_s + ", cantidad: " + item.cantidad.to_s + ", importe: " + item.importe.to_s
-    end 
+    # mostrar en consola los productos incluidos
+    # @sale.saleDetails.each do |item|
+    # # #params[:saledetails].each do |item|
+    #    puts "id: " + item.product_id.to_s + ", p. u: " + item.preciounitario.to_s + ", cantidad: " + item.cantidad.to_s + ", importe: " + item.importe.to_s
+    # end 
 
     
 
