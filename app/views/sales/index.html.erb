@@ -22,13 +22,17 @@
         <td><%= sale.importe %></td>
         <td><%=l sale.created_at %></td>
         <td>
+          <% if can? :edit, sale %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_sale_path(sale), :class => 'btn btn-mini' %>
+          <% end %>
+          <% if can? :destroy, sale %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       sale_path(sale),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
+          <% end -%>
         </td>
       </tr>
     <% end %>

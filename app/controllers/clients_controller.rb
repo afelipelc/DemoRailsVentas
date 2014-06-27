@@ -1,4 +1,6 @@
 class ClientsController < ApplicationController
+  load_and_authorize_resource ##autorizar
+
   before_action :set_client, only: [:show, :edit, :update, :destroy]
   
   autocomplete :client, :nombre, :display_value => :nombre, :extra_data => [:direccion, :telefono, :email] do |items|
@@ -47,8 +49,6 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(client_params)
-
-
     respond_to do |format|
       if @client.valid? 
         puts "cliente valido"
@@ -60,8 +60,6 @@ class ClientsController < ApplicationController
           format.json { render json: @client.errors, status: :unprocessable_entity }
         end
       else
-        puts "cliente NO valido"
-        @client.errors[:nombre]
         format.html { render :new }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end

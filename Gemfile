@@ -31,6 +31,7 @@ gem 'spring',        group: :development
 gem 'twitter-bootstrap-rails'
 gem 'rails4-autocomplete'
 gem 'devise'
+gem "cancan"
 
 #my gems
 # gem 'strong_parameters' # not supported by rails 4
