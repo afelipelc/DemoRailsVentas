@@ -1,7 +1,11 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource ##autorizar
-
   before_action :set_client, only: [:show, :edit, :update, :destroy]
+
+  before_filter do
+    resource = controller_name.singularize.to_sym
+    method = "#{resource}_params"
+  end
   
   autocomplete :client, :nombre, :display_value => :nombre, :extra_data => [:direccion, :telefono, :email] do |items|
     respond_to do |format|
@@ -50,8 +54,7 @@ class ClientsController < ApplicationController
   def create
     @client = Client.new(client_params)
     respond_to do |format|
-      if @client.valid? 
-        puts "cliente valido"
+      # if @client.valid? 
         if @client.save
           format.html { redirect_to @client, notice: 'Client was successfully created.' }
           format.json { render :show, status: :created, location: @client }
@@ -59,10 +62,10 @@ class ClientsController < ApplicationController
           format.html { render :new }
           format.json { render json: @client.errors, status: :unprocessable_entity }
         end
-      else
-        format.html { render :new }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
-      end
+      # else
+      #   format.html { render :new }
+      #   format.json { render json: @client.errors, status: :unprocessable_entity }
+      # end
     end
   end
 

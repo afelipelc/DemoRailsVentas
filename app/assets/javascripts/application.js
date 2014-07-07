@@ -18,13 +18,10 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
-
-});
-
-//on load content (reload with turbolinks without resources)
-$(document).on('page:load', function() {
-  $('#clavelibro').on("change",function() {
+//My global ready funtion with events
+var ready;
+ready = function(){
+    $('#clavelibro').on("change",function() {
     //pasar a cantidad
     $("#cantidadlibro").focus();
   });
@@ -58,7 +55,13 @@ $(document).on('page:load', function() {
       $("#sale_client_id").val("");
      }
   });
-});
+}
+
+//manage with turbolink adding page:load event
+$(document).ready(ready);
+// //on load content (reload with turbolinks without resources)
+$(document).on('page:load', ready);
+
 
 function agregaLibro(codigo){
   var index = $(".idLibroVender").length;

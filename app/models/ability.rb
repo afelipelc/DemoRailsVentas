@@ -10,6 +10,8 @@ class Ability
         can :cru, Sale
         can :cru, SaleDetail
         can :cru, Client
+        can :autocomplete_client_nombre, Client
+        can :find, Product
     end
 
     # Define abilities for the passed in user here. For example:
